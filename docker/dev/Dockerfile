@@ -27,5 +27,9 @@ RUN apt-get install -y ssh; \
     sed -i 's@#X11UseLocalhost yes@X11UseLocalhost no@' /etc/ssh/sshd_config ;\
     mkdir -p /etc/secret
 
+# convenience script to run jupyter manually
+EXPOSE 8888
+RUN echo "/swift-jupyter/docker/run_jupyter.sh --allow-root --no-browser --ip=0.0.0.0 --port=8888 --NotebookApp.custom_display_url=http://127.0.0.1:8888" > /root/run_jupyter.sh && chmod +x /root/run_jupyter.sh
+
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D", "-e"]
