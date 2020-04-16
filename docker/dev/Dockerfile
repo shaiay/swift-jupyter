@@ -14,13 +14,13 @@ RUN echo "export PATH=$PATH:/swift-tensorflow-toolchain/usr/bin" >  /etc/profile
 #
 # To use Host's host keys, map /etc/sshd:/etc/secret:readonly
 # To connect as root:
-# ssh root@HOST -p 8022 -o  -i swift-jupyter.rsa
+# ssh root@HOST -p 8022 -i swift-jupyter_rsa
 #
-COPY ./swift-jupyter.pub /root
+COPY ./swift-jupyter_rsa.pub /root
 RUN apt-get install -y ssh; \
     mkdir -p /run/sshd; \
     mkdir /root/.ssh ; \
-    mv /root/swift-jupyter.pub /root/.ssh/authorized_keys2 ;\
+    mv /root/swift-jupyter_rsa.pub /root/.ssh/authorized_keys2 ;\
     ln -s /root/.ssh/authorized_keys2 /root/.ssh/authorized_keys; \
     chmod go-rwx -R /root/.ssh ;\
     sed -i 's@#HostKey /etc/ssh@HostKey /etc/secret@' /etc/ssh/sshd_config ;\
